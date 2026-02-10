@@ -1,7 +1,7 @@
 # Model files
-*.h5
-*.pkl
-*.joblib
+# *.h5  # Uncomment if model files are too large
+# *.pkl
+# *.joblib
 
 # Python
 __pycache__/
