@@ -1,129 +1,253 @@
-# Analisis Machine Learning Transaksi Bank
+# 🏦 Bank Transaction Clustering & Classification
 
-Proyek machine learning komprehensif untuk menganalisis data transaksi bank menggunakan teknik clustering dan klasifikasi.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-orange?logo=scikit-learn)
+![pandas](https://img.shields.io/badge/pandas-2.x-150458?logo=pandas)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## 📋 Ringkasan Proyek
-
-Proyek ini mengimplementasikan pipeline machine learning dua fase:
-1. **Clustering** - Segmentasi pelanggan dan deteksi anomali
-2. **Klasifikasi** - Klasifikasi transaksi menggunakan Decision Tree
-
-Dataset berisi **2.512 sampel transaksi bank** dengan atribut komprehensif termasuk detail transaksi, demografi pelanggan, dan pola perilaku.
-
-## 📊 Fitur Dataset
-
-- **TransactionID**: Pengidentifikasi unik untuk setiap transaksi
-- **AccountID**: Pengidentifikasi unik untuk setiap akun
-- **TransactionAmount**: Nilai transaksi
-- **TransactionDate**: Tanggal dan waktu transaksi
-- **TransactionType**: Tipe transaksi (Credit atau Debit)
-- **Location**: Lokasi geografis (kota di Amerika Serikat)
-- **DeviceID**: Perangkat yang digunakan untuk transaksi
-- **IP Address**: Alamat IPv4 saat transaksi
-- **MerchantID**: Pengidentifikasi merchant unik
-- **AccountBalance**: Saldo akun setelah transaksi
-- **Channel**: Saluran transaksi (Online, ATM, Branch)
-- **CustomerAge**: Usia pelanggan
-- **CustomerOccupation**: Profesi pelanggan
-- **LoginAttempts**: Jumlah upaya login sebelum transaksi
-- Dan lainnya...
-
-## 🎯 Tujuan Proyek
-
-- Melakukan segmentasi pelanggan menggunakan algoritma clustering
-- Mendeteksi anomali dalam pola transaksi
-- Membangun model klasifikasi untuk kategorisasi transaksi
-- Memberikan wawasan tentang perilaku pelanggan dan keamanan transaksi
-
-## 📁 Struktur Proyek
-
-```
-bank-transaction-ml-analysis/
-├── [Clustering]_Submission_Akhir_BMLP_Devin_Novansyah.ipynb
-├── [Klasifikasi]_Submission_Akhir_BMLP_Devin_Novansyah.ipynb
-├── bank_transactions_data_edited.csv
-├── data_clustering.csv
-├── decision_tree_model.h5
-├── model_clustering.h5
-└── README.md
-```
-
-## 🛠️ Teknologi yang Digunakan
-
-- **Python 3.x**
-- **Pandas** - Manipulasi dan analisis data
-- **NumPy** - Komputasi numerik
-- **Scikit-learn** - Algoritma machine learning
-- **TensorFlow/Keras** - Model deep learning
-- **Jupyter Notebook** - Analisis interaktif
-
-## 📝 Notebook Proyek
-
-### 1. Notebook Clustering
-Melakukan segmentasi pelanggan dan deteksi anomali menggunakan berbagai teknik clustering.
-
-**Langkah-langkah Utama:**
-- Pemuatan dan eksplorasi data
-- Pra-pemrosesan data
-- Rekayasa fitur
-- Pelatihan model clustering
-- Visualisasi dan interpretasi hasil
-
-### 2. Notebook Klasifikasi
-Membangun model klasifikasi menggunakan hasil clustering.
-
-**Langkah-langkah Utama:**
-- Memuat data yang telah di-cluster
-- Pembagian data (training/testing)
-- Pelatihan classifier Decision Tree
-- Evaluasi model
-- Metrik kinerja (accuracy, precision, recall, F1-score)
-
-## 🚀 Memulai
-
-### Prasyarat
-- Python 3.7+
-- Jupyter Notebook atau JupyterLab
-- Library yang diperlukan (lihat Teknologi yang Digunakan)
-
-### Instalasi
-
-1. Clone repository
-```bash
-git clone https://github.com/devin-novansyah16/bank-transaction-ml-analysis.git
-cd bank-transaction-ml-analysis
-```
-
-2. Install dependensi yang diperlukan
-```bash
-pip install pandas numpy scikit-learn tensorflow jupyter
-```
-
-3. Jalankan Jupyter Notebook
-```bash
-jupyter notebook
-```
-
-4. Buka notebook secara berurutan:
-   - Mulai dengan `[Clustering]_Submission_Akhir_BMLP_Devin_Novansyah.ipynb`
-   - Kemudian lanjutkan ke `[Klasifikasi]_Submission_Akhir_BMLP_Devin_Novansyah.ipynb`
-
-## 📈 Hasil
-
-Proyek ini mencakup model terlatih dan hasil:
-- **model_clustering.h5** - Model clustering terlatih
-- **decision_tree_model.h5** - Model klasifikasi terlatih
-- **data_clustering.csv** - Dataset yang telah di-cluster untuk klasifikasi
-
-## 📧 Kontak
-
-**Penulis:** Devin Novansyah  
-**Email:** devinnovansyah1611@gmail.com
-
-## 📄 Lisensi
-
-Proyek ini adalah open source dan tersedia di bawah Lisensi MIT.
+Proyek machine learning dua tahap untuk **mengelompokkan nasabah bank** berdasarkan pola transaksi menggunakan **K-Means Clustering**, lalu **memprediksi label cluster** menggunakan model klasifikasi **Decision Tree** dan **Random Forest**.
 
 ---
 
-*Terakhir Diperbarui: 11 Februari 2026*
+## 📋 Daftar Isi
+
+- [Latar Belakang](#-latar-belakang)
+- [Struktur File](#-struktur-file)
+- [Dataset](#-dataset)
+- [Library yang Digunakan](#-library-yang-digunakan)
+- [Tahap 1 — Clustering](#-tahap-1--clustering)
+- [Tahap 2 — Klasifikasi](#-tahap-2--klasifikasi)
+- [Cara Menjalankan](#-cara-menjalankan)
+- [Hasil](#-hasil)
+- [Author](#-author)
+
+---
+
+## 📌 Latar Belakang
+
+Proyek ini terdiri dari dua tahap yang saling terhubung:
+
+1. **Clustering** — Nasabah dikelompokkan ke dalam cluster berdasarkan kesamaan karakteristik transaksi dan profil menggunakan algoritma K-Means. Hasil clustering disimpan sebagai kolom `Target`.
+2. **Klasifikasi** — Label `Target` dari hasil clustering digunakan untuk melatih model klasifikasi (Decision Tree & Random Forest), sehingga cluster nasabah baru dapat diprediksi secara otomatis.
+
+---
+
+## 📁 Struktur File
+
+```
+📦 bank-transaction-clustering-classification
+ ┣ 📄 bank_clustering.ipynb                              # Notebook Tahap 1: Clustering
+ ┣ 📄 klasifikasi_clustering.py                          # Script Tahap 2: Klasifikasi
+ ┣ 📄 bank_transactions_data_edited.csv                  # Dataset mentah
+ ┣ 📄 data_clustering.csv                                # Output clustering (fitur numerik)
+ ┣ 📄 data_clustering_inverse.csv                        # Output clustering (fitur asli/inverse)
+ ┣ 📄 model_clustering.h5                                # Model KMeans tersimpan
+ ┣ 📄 PCA_model_clustering.h5                            # Model KMeans + PCA (opsional)
+ ┣ 📄 decision_tree_model.h5                             # Model Decision Tree tersimpan
+ ┣ 📄 explore_RandomForestClassifier_classification.h5   # Model Random Forest tersimpan
+ ┣ 📄 tuning_classification.h5                           # Model hasil Hyperparameter Tuning
+ ┗ 📄 README.md
+```
+
+---
+
+## 📊 Dataset
+
+Dataset awal berisi **2.537 transaksi** dengan **16 kolom** fitur:
+
+| Kolom | Deskripsi |
+|-------|-----------|
+| `TransactionID` | ID unik transaksi |
+| `AccountID` | ID akun nasabah |
+| `TransactionAmount` | Nilai transaksi |
+| `TransactionType` | Jenis transaksi (Debit/Credit) |
+| `Location` | Lokasi transaksi |
+| `Channel` | Saluran transaksi (ATM/Online) |
+| `CustomerAge` | Usia nasabah |
+| `CustomerOccupation` | Pekerjaan nasabah |
+| `TransactionDuration` | Durasi transaksi (detik) |
+| `LoginAttempts` | Jumlah percobaan login |
+| `AccountBalance` | Saldo rekening |
+| `Target` | Label cluster hasil clustering ✅ |
+
+Setelah preprocessing, dataset yang digunakan untuk klasifikasi berjumlah **±1.945 data**.
+
+---
+
+## 🔧 Library yang Digunakan
+
+```python
+# Tahap 1 - Clustering
+pandas, numpy, matplotlib, seaborn
+scikit-learn (LabelEncoder, StandardScaler, KMeans, PCA, silhouette_score)
+yellowbrick (KElbowVisualizer)
+joblib
+
+# Tahap 2 - Klasifikasi
+pandas
+scikit-learn (DecisionTreeClassifier, RandomForestClassifier, RandomizedSearchCV)
+joblib
+```
+
+---
+
+## 🔵 Tahap 1 — Clustering
+
+### Alur Pengerjaan
+
+**1. Import Library**
+Mengimpor seluruh library yang dibutuhkan untuk analisis data dan pembangunan model.
+
+**2. Exploratory Data Analysis (EDA)**
+- Menampilkan 5 baris pertama dataset (`head()`)
+- Memeriksa tipe data dan jumlah baris/kolom (`info()`)
+- Statistik deskriptif (`describe()`)
+- Visualisasi heatmap korelasi antar fitur numerik
+- Histogram distribusi setiap fitur numerik
+- Boxplot nilai transaksi berdasarkan pekerjaan nasabah
+
+**3. Pembersihan & Pra-Pemrosesan Data**
+- Pengecekan dan penghapusan nilai null (`isnull().sum()`, `dropna()`)
+- Pengecekan dan penghapusan data duplikat (`duplicated().sum()`, `drop_duplicates()`)
+- Drop kolom tidak relevan (ID, IP Address, Date)
+- Feature encoding dengan `LabelEncoder` untuk fitur kategorikal
+- Handling outlier menggunakan metode IQR
+- Feature scaling menggunakan `StandardScaler`
+- Binning fitur `CustomerAge` menjadi 3 kelompok (Muda, Dewasa, Lansia)
+
+**4. Membangun Model Clustering**
+- Menentukan jumlah cluster optimal dengan **Elbow Method** (`KElbowVisualizer`)
+- Melatih model **K-Means Clustering** dengan `n_clusters=2`
+- Menghitung **Silhouette Score** untuk evaluasi model
+- Visualisasi hasil clustering dalam 2D menggunakan **PCA**
+- Menyimpan model dengan `joblib`
+
+**5. Interpretasi Cluster**
+
+Kondisi Scaled (sebelum inverse):
+
+| Fitur | Cluster 0 (mean) | Cluster 1 (mean) |
+|-------|:---:|:---:|
+| TransactionAmount | -0.01 | 0.01 |
+| CustomerAge | 0.02 | -0.02 |
+| AccountBalance | 0.01 | -0.01 |
+
+- **Cluster 0 — Nasabah Stabil:** Usia sedikit di atas rata-rata, saldo rekening sedikit di atas rata-rata, transaksi sedikit di bawah rata-rata. Cenderung nasabah lebih dewasa dan finansial stabil.
+- **Cluster 1 — Nasabah Aktif Bertransaksi:** Usia sedikit di bawah rata-rata (lebih muda), transaksi sedikit di atas rata-rata, saldo rekening sedikit di bawah rata-rata. Cenderung nasabah muda yang aktif bertransaksi.
+
+Kondisi Inverse (nilai asli):
+
+| Fitur | Cluster 0 | Cluster 1 |
+|-------|-----------|-----------|
+| CustomerAge (mean) | ~23 tahun | ~52 tahun |
+| AccountBalance (mean) | ~1.538 | ~6.397 |
+| TransactionAmount (mean) | ~263 | ~247 |
+| CustomerOccupation (modus) | Student | Doctor |
+
+- **Cluster 0 — Nasabah Muda (Pelajar):** Usia 18–34 tahun, didominasi pelajar/mahasiswa, saldo rekening rendah. Rekomendasi: produk tabungan pelajar atau fitur cicilan ringan.
+- **Cluster 1 — Nasabah Dewasa (Profesional):** Usia 26–80 tahun, didominasi dokter/profesional, saldo rekening tinggi. Rekomendasi: produk investasi, deposito, atau layanan wealth management.
+
+**6. Mengeksport Data**
+- Menyimpan hasil clustering ke `data_clustering.csv`
+- Melakukan inverse transform untuk mengembalikan data ke nilai asli
+- Menyimpan data inverse ke `data_clustering_inverse.csv`
+
+---
+
+## 🟠 Tahap 2 — Klasifikasi
+
+### Alur Pipeline
+
+```
+data_clustering.csv / data_clustering_inverse.csv
+   │
+   ▼
+(Advanced) One Hot Encoding ──► df_encoded
+   │
+   ▼
+Data Splitting (80% train / 20% test, stratify)
+   │
+   ├──► Decision Tree Classifier ──► Evaluasi ──► Simpan .h5
+   │
+   ├──► Random Forest Classifier ──► Evaluasi ──► Simpan .h5
+   │
+   └──► Hyperparameter Tuning (RandomizedSearchCV) ──► Evaluasi ──► Simpan .h5
+```
+
+### Dua Skenario Dataset
+
+| Skenario | Dataset | Keterangan |
+|----------|---------|------------|
+| **Standar** | `data_clustering.csv` | Fitur sudah numerik/encoded |
+| **Advanced** | `data_clustering_inverse.csv` | Fitur kategorikal asli, perlu One Hot Encoding |
+
+### Evaluasi Model
+
+| Metrik | Deskripsi |
+|--------|-----------|
+| **Accuracy** | Proporsi prediksi yang benar secara keseluruhan |
+| **Precision** | Ketepatan prediksi positif |
+| **Recall** | Kemampuan model menemukan seluruh kasus positif |
+| **F1-Score** | Rata-rata harmonik Precision dan Recall |
+
+Tiga model dibandingkan: Decision Tree (baseline) → Random Forest (Skilled) → Random Forest + RandomizedSearchCV (Advanced).
+
+---
+
+## ▶️ Cara Menjalankan
+
+**1. Clone repository ini**
+```bash
+git clone https://github.com/username/bank-transaction-clustering.git
+cd bank-transaction-clustering
+```
+
+**2. Install dependencies**
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn yellowbrick joblib
+```
+
+**3. Jalankan Tahap 1 — Clustering**
+
+Buka di Jupyter Notebook atau Google Colab:
+```bash
+jupyter notebook bank_clustering.ipynb
+```
+
+**4. Jalankan Tahap 2 — Klasifikasi**
+```bash
+python klasifikasi_clustering.py
+```
+
+> **💡 Tips:** Untuk beralih antara dataset standar dan advanced pada tahap klasifikasi, ubah baris berikut di script:
+> ```python
+> # Standar
+> df = pd.read_csv("data_clustering.csv")
+>
+> # Advanced (dengan One Hot Encoding)
+> df = pd.read_csv("data_clustering_inverse.csv")
+> ```
+
+---
+
+## 📈 Hasil
+
+### Clustering
+- **Jumlah Cluster Optimal:** 2 (berdasarkan Elbow Method)
+- **Silhouette Score:** ~0.573
+- **Jumlah data Cluster 0:** 414 nasabah
+- **Jumlah data Cluster 1:** 1.087 nasabah
+
+### Klasifikasi
+- Model dievaluasi menggunakan `classification_report` dari scikit-learn
+- Model terbaik disimpan sebagai `tuning_classification.h5`
+
+---
+
+## 👤 Author
+
+> Ganti bagian ini dengan nama dan profil kamu
+
+- **Nama:** [Nama Kamu]
+- **GitHub:** [@username](https://github.com/username)
+- **LinkedIn:** [linkedin.com/in/username](https://linkedin.com/in/username)
