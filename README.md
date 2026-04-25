@@ -36,8 +36,8 @@ Proyek ini terdiri dari dua tahap yang saling terhubung:
 
 ```
 📦 bank-transaction-clustering-classification
- ┣ 📄 bank_clustering.ipynb                              # Notebook Tahap 1: Clustering
- ┣ 📄 klasifikasi_clustering.py                          # Script Tahap 2: Klasifikasi
+ ┣ 📄 [Clustering]_Submission_Akhir_BMLP_Devin_Novansyah.ipynb                              # Notebook Tahap 1: Clustering
+ ┣ 📄 [klasifikasi]_Submission_Akhir_BMLP_Devin_Novansyah.ipynb                          # Script Tahap 2: Klasifikasi
  ┣ 📄 bank_transactions_data_edited.csv                  # Dataset mentah
  ┣ 📄 data_clustering.csv                                # Output clustering (fitur numerik)
  ┣ 📄 data_clustering_inverse.csv                        # Output clustering (fitur asli/inverse)
@@ -248,6 +248,6 @@ python klasifikasi_clustering.py
 
 > Ganti bagian ini dengan nama dan profil kamu
 
-- **Nama:** [Nama Kamu]
-- **GitHub:** [@username](https://github.com/username)
-- **LinkedIn:** [linkedin.com/in/username](https://linkedin.com/in/username)
+- **Nama:** Devin Novansyah
+- **GitHub:** https://github.com/devin-novansyah16
+- **LinkedIn:** linkedin.com/in/devin-novansyah
