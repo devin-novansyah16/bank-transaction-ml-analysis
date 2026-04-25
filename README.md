@@ -246,8 +246,7 @@ python klasifikasi_clustering.py
 
 ## 👤 Author
 
-> Ganti bagian ini dengan nama dan profil kamu
 
 - **Nama:** Devin Novansyah
 - **GitHub:** https://github.com/devin-novansyah16
-- **LinkedIn:** linkedin.com/in/devin-novansyah
+- **LinkedIn:** [linkedin.com/in/devin-novansyah](https://www.linkedin.com/in/devin-novansyah/)
